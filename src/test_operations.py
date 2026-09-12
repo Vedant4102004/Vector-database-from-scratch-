@@ -34,4 +34,27 @@ deleted = index.delete(new_index)
 
 print(f"Delete successful: {deleted}")
 
+results_after_delete = index.search(
+    new_vector,
+    top_k=5,
+    n_probe=10
+)
+
+print("\nSearch after delete:")
+
+found_deleted = any(
+    idx == new_index
+    for idx, score in results_after_delete
+)
+
+for idx, score in results_after_delete:
+    print(f"{idx} | {score:.4f}")
+
+print(f"\nDeleted vector still searchable: {found_deleted}")
+
+if not found_deleted:
+    print("Delete test passed.")
+else:
+    print("Delete test failed.")
+
 print("\nOperations test completed.")
