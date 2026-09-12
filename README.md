@@ -286,14 +286,3 @@ The project demonstrates that IVF can significantly improve search throughput co
 For example, with `n_probe=1`, the implementation achieved approximately 4,527 queries/sec with 74.82% Recall@10, while `n_probe=50` achieved approximately 99% Recall@10 at approximately 156 queries/sec.
 
 ```
-
-Save:
-
-- `Ctrl + O`
-- Enter
-- `Ctrl + X`
-
-Then **don't commit yet**.
-
-Reply `done` after saving it.
-```
