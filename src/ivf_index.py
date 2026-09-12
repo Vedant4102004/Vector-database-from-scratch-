@@ -16,8 +16,37 @@ class IVFIndex:
         n = len(self.vectors)
 
         rng = np.random.default_rng(42)
-        indices = rng.choice(n, self.n_clusters, replace=False)
-        self.centroids = self.vectors[indices].copy()
+
+        centroids = np.empty(
+            (self.n_clusters, self.vectors.shape[1]),
+            dtype=np.float32
+        )
+
+        first_index = rng.integers(n)
+        centroids[0] = self.vectors[first_index]
+
+        closest_distances = 1 - (self.vectors @ centroids[0])
+        closest_distances = np.maximum(closest_distances, 0)
+
+        for i in range(1, self.n_clusters):
+            probabilities = closest_distances / closest_distances.sum()
+
+            next_index = rng.choice(
+                n,
+                p=probabilities
+            )
+
+            centroids[i] = self.vectors[next_index]
+
+            distances = 1 - (self.vectors @ centroids[i])
+            distances = np.maximum(distances, 0)
+
+            closest_distances = np.minimum(
+                closest_distances,
+                distances
+            )
+
+        self.centroids = centroids
 
         for _ in range(iterations):
             similarities = self.vectors @ self.centroids.T
