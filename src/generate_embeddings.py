@@ -23,6 +23,7 @@ embeddings = model.encode(
 
 os.makedirs("data", exist_ok=True)
 
+
 np.save("data/embeddings.npy", embeddings)
 np.save("data/texts.npy", np.array(texts, dtype=object))
 
